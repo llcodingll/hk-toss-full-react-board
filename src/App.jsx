@@ -1,23 +1,21 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './App.css'
 import Board from './components/Board';
-import Content from './components/Content';
 import Details from './components/Details';
+import { useState } from 'react';
 
 function App() {
+  const [boards, setBoards] = useState([]);
+
   const router = createBrowserRouter(
     [
       {
         path: "/",
-        element: <Board />
+        element: <Board boards={boards} setBoards={setBoards} />
       },
       {
-        path: "/contents",
-        element: <Content />
-      },
-      {
-        path: "/id",
-        element: <Details />
+        path: "/boards/:id",
+        element: <Details boards={boards} setBoards={setBoards} />
       }
     ]
   )
