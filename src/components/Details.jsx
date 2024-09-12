@@ -21,13 +21,13 @@ const Details = () => {
 
 
     const deleteHadler = () => {
-        setBoards(board.filter((p) => p.id !== board.id));
+        setBoards(boards.filter((p) => p.id !== board.id));
         navigate(`/`);
     };
 
     const updateHadler = () => {
         setBoards(
-            board.map((p) =>
+            boards.map((p) =>
             p.id === board.id
             ? {...p, title: updateTitle, content: updateContent}
             : p)
