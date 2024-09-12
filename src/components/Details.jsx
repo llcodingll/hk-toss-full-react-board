@@ -1,27 +1,39 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom"
+import { useRecoilState } from "recoil";
+import { boardsState } from "../atom/atom";
 
 //detail page
 const Details = () => {
     const {id} = useParams();
     const navigate = useNavigate();
+    const [boards, setBoards] = useRecoilState(boardsState);
+
     const board = boards.find((p) => p.id === parseInt(id));
 
     const [edit, setEdit] = useState(false);
     const [updateTitle, setUpdateTitle] = useState(board.title);
     const [updateContent, setUpdateContent] = useState(board.content);
 
+    if (!board) {
+        return <h2>Board not found</h2>;
+    }
+
+
     const deleteHadler = () => {
-        setBoards(boards.filter((p) => p.id !== board.id));
+        setBoards(board.filter((p) => p.id !== board.id));
         navigate(`/`);
     };
 
     const updateHadler = () => {
         setBoards(
-            boards.map((p) =>
-            p.id === board.id ? {...p, title: updateTitle, content: updateContent} : p)
+            board.map((p) =>
+            p.id === board.id
+            ? {...p, title: updateTitle, content: updateContent}
+            : p)
         );
         setEdit(false);
+        navigate("/");
     };
 
     if(!board) {
@@ -34,7 +46,7 @@ const Details = () => {
                 <div>
                     <input
                     type="text"
-                    value={updateTitle}                
+                    value={updateTitle}
                     onChange={(e) => setUpdateTitle(e.target.value)}
                     />
                     <textarea
@@ -51,7 +63,7 @@ const Details = () => {
                     <button onClick={deleteHadler}>Delete</button>
                 </div>
             )}
-       </div>
+        </div>
     );
 }
 export default Details

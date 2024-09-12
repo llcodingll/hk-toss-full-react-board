@@ -1,10 +1,12 @@
 import { useState } from "react"
 import { Link } from "react-router-dom";
+import { useRecoilState } from 'recoil';
+import { boardsState } from "../atom/atom";
 //first page
-const Board = ({}) => {
+const Boards = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [boards, setBoards] = useState([]);
+  const [boards, setBoards] = useRecoilState(boardsState);
 
   const hadleAddBoard = (e) => {
     e.preventDefault();
@@ -39,14 +41,16 @@ const Board = ({}) => {
   <hr/>
     <h2>Boards List</h2>
     <ul>
-      {boards.map((board) => (
+      {boards.map((board) =>{ 
+      console.log(board )
+      return(
         <li key={board.id}>
           <Link to={`/boards/${board.id}`}>{board.title}</Link>
         </li>
-      ))}
+      )})}
     </ul>
     </div>
   );
 }
 
-export default Board
+export default Boards

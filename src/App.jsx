@@ -1,29 +1,29 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { RecoilRoot } from 'recoil';
 import './App.css'
-import Board from './components/Board';
+import Boards from './components/Boards';
 import Details from './components/Details';
-import { useState } from 'react';
 
 function App() {
-  const [boards, setBoards] = useState([]);
 
   const router = createBrowserRouter(
     [
       {
         path: "/",
-        element: <Board boards={boards} setBoards={setBoards} />
+        element: <Boards />
       },
       {
         path: "/boards/:id",
-        element: <Details boards={boards} setBoards={setBoards} />
+        element: <Details />
+        
       }
     ]
   )
 
   return (
-    <>
-    <RouterProvider router={router}/>
-    </>
+    <RecoilRoot>
+      <RouterProvider router={router}/>
+    </RecoilRoot>
   )
 }
 
